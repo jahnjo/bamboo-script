@@ -6,8 +6,8 @@ import subprocess
 
 user = sys.argv[-1]
 
-bambooHomeDir = '/home/{}/Bamboo-Home/'.format(user)
-bambooInstallDir = '/home/{}/Bamboo-Install/'.format(user)
+bambooHomeDir = '/home/{}/Bamboo/Bamboo-Home/'.format(user)
+bambooInstallDir = '/home/{}/Bamboo/Bamboo-Install/'.format(user)
 bambooDownloadLocation = '/home/{}/Downloads/atlassian-bamboo-6.5.0.tar.gz'.format(user) 
 bambooDownloadLink = 'https://www.atlassian.com/software/bamboo/downloads/binary/atlassian-bamboo-6.5.0.tar.gz'
 bambooInit = bambooInstallDir + 'atlassian-bamboo-6.5.0/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties'
@@ -24,16 +24,16 @@ def checkDependencies():
 	    absentCmd.append(cmd[i])
     if len(absentCmd) > 0:
         print '\nDependencies still needed:'
-	print "\n".join(absentCmd)
-    print '\n'
+        print "\n".join(absentCmd)
+        print '\n'
     
 
 #Installing pip so we can use pip install wget to download bamboo.
 def getPip():
     if os.path.exists('get-pip.py'):
-	print 'Pip is already installed'
+        print 'Pip is already installed'
     else:
-	print 'Downloading pip'
+        print 'Downloading pip'
         subprocess.call(["curl","https://bootstrap.pypa.io/get-pip.py","-o","get-pip.py"])
         subprocess.call("python get-pip.py", shell=True)
         subprocess.call([sys.executable,'-m','pip','install','wget'])
@@ -41,9 +41,9 @@ def getPip():
 #Using wget to download bamboo.
 def downloadBamboo():
     if os.path.exists(bambooDownloadLocation):
-	print 'Bamboo already downloaded'
+        print 'Bamboo already downloaded'
     else:
-	print 'Downloading wget'
+        print 'Downloading wget'
         wget.download(bambooDownloadLink,out=bambooDownloadLocation)
 
 #Taking the tar.gz that was downloaded and extracting it to the bamboo install directory.
@@ -78,7 +78,7 @@ def configBambooHome():
             subprocess.call("echo {} >> {}".format(bambooHomeConfig,bambooInit), shell=True)
             print 'Done configuring'
     else:
-	print 'An error has occured bamboo install directory doesn\'t exists'
+        print 'An error has occured bamboo install directory doesn\'t exists'
     
 #Prompting the user to start the server
 def startBambooServer():
@@ -86,7 +86,7 @@ def startBambooServer():
     if input == 'y':
         subprocess.call("{}".format(startServer), shell=True)
     else:
-	print 'Refer to wiki to start server'
+        print 'Refer to wiki to start server'
 
 getPip()
 import wget
